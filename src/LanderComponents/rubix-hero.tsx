@@ -33,7 +33,7 @@ const RubixHero = () => {
       </div>
       
       <motion.h1 
-        className="text-6xl md:text-8xl font-bold mb-6 tracking-tight mix-blend-difference text-white"
+        className="text-6xl md:text-7xl font-bold mb-6 tracking-tight mix-blend-difference text-white"
         initial={{ 
           opacity: 0, 
           y: 50,
@@ -50,7 +50,7 @@ const RubixHero = () => {
           delay: 0.3
         }}
       >
-        Solve the Complexity
+        Intelligence, Your way
       </motion.h1>
       
       <motion.p 
@@ -71,7 +71,7 @@ const RubixHero = () => {
           delay: 0.8
         }}
       >
-        One twist at a time.
+       Ask anything. Get the right guidence. Instantly
       </motion.p>
     </div>
   );

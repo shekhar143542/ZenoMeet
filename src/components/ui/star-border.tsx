@@ -1,13 +1,16 @@
 import { cn } from "@/lib/utils"
-import { ElementType, ComponentPropsWithoutRef } from "react"
+import { ElementType, ComponentPropsWithRef, ReactNode } from "react"
 
-interface StarBorderProps<T extends ElementType> {
-  as?: T
+type StarBorderOwnProps = {
   color?: string
   speed?: string
   className?: string
-  children: React.ReactNode
+  children: ReactNode
 }
+
+type StarBorderProps<T extends ElementType> = {
+  as?: T
+} & StarBorderOwnProps & Omit<ComponentPropsWithRef<T>, keyof StarBorderOwnProps | "as">
 
 export function StarBorder<T extends ElementType = "button">({
   as,
@@ -16,7 +19,7 @@ export function StarBorder<T extends ElementType = "button">({
   speed = "6s",
   children,
   ...props
-}: StarBorderProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof StarBorderProps<T>>) {
+}: StarBorderProps<T>) {
   const Component = as || "button"
   const defaultColor = color || "hsl(var(--foreground))"
 

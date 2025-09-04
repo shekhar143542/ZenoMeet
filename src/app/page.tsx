@@ -18,7 +18,7 @@ export default function Home() {
           {/* Overlay StarBorder on cube */}
           <div className="absolute bottom-135 flex justify-center w-full">
             <StarBorder>
-              Create With AI
+              Meeting With AI
             </StarBorder>
           </div>
           
@@ -28,7 +28,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.5, duration: 0.8 }}
             >
-              <Link href='/'>  
+              <Link href='/sign-in'>  
                 <HoverButton>Get Started</HoverButton>
               </Link>
             </motion.div>
