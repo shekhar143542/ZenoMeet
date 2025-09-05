@@ -1,16 +1,13 @@
 import { cn } from "@/lib/utils"
-import { ElementType, ComponentPropsWithRef, ReactNode } from "react"
+import { ElementType, ComponentPropsWithoutRef } from "react"
 
-type StarBorderOwnProps = {
+interface StarBorderProps<T extends ElementType> {
+  as?: T
   color?: string
   speed?: string
   className?: string
-  children: ReactNode
+  children: React.ReactNode
 }
-
-type StarBorderProps<T extends ElementType> = {
-  as?: T
-} & StarBorderOwnProps & Omit<ComponentPropsWithRef<T>, keyof StarBorderOwnProps | "as">
 
 export function StarBorder<T extends ElementType = "button">({
   as,
@@ -19,7 +16,7 @@ export function StarBorder<T extends ElementType = "button">({
   speed = "6s",
   children,
   ...props
-}: StarBorderProps<T>) {
+}: StarBorderProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof StarBorderProps<T>>) {
   const Component = as || "button"
   const defaultColor = color || "hsl(var(--foreground))"
 
@@ -52,7 +49,7 @@ export function StarBorder<T extends ElementType = "button">({
         }}
       />
       <div className={cn(
-        "relative z-1 border text-foreground text-center text-base py-4 px-6 rounded-[20px]",
+        "relative z-10 border text-foreground text-center text-base py-4 px-6 rounded-[20px]",
         "bg-gradient-to-b from-background/90 to-muted/90 border-border/40",
         "dark:from-background dark:to-muted dark:border-border"
       )}>

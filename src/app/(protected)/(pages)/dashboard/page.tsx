@@ -16,6 +16,7 @@ const page = async() => {
   return (
     <div>
       dashboard page
+
     </div>
   )
 }
