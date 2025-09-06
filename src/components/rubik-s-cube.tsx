@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Canvas } from "@react-three/fiber";
 import { PerspectiveCamera, useHelper } from "@react-three/drei";
 import { useThree, useFrame } from "@react-three/fiber";
@@ -292,7 +291,6 @@ const RubiksCubeModel = forwardRef<{ reset: () => void }, RubiksCubeModelProps>(
       lastMoveAxisRef.current = move.axis;
       isAnimatingRef.current = true;
       currentRotationRef.current = 0;
-    } else {
     }
   }, [possibleMoves, isVisible]);
 
@@ -313,7 +311,6 @@ const RubiksCubeModel = forwardRef<{ reset: () => void }, RubiksCubeModelProps>(
           delay
         );
       } else {
-        
         if (isResizingRef.current && isVisible && isMountedRef.current) {
           setTimeout(() => {
             if (isMountedRef.current) {
@@ -566,7 +563,6 @@ const RubiksCubeModel = forwardRef<{ reset: () => void }, RubiksCubeModelProps>(
   );
 });
 
-
 function CameraController() {
   const { camera } = useThree();
   
@@ -583,9 +579,6 @@ interface EnhancedSpotlightProps extends SpotLightProps {
 
 function EnhancedSpotlight(props: EnhancedSpotlightProps) {
   const light = useRef<THREE.SpotLight>(null);
-
-  // Uncomment to see a visual helper for the spotlight
-  // useHelper(spotlightRef, THREE.SpotLightHelper, 'red');
 
   useEffect(() => {
     if (light.current) {
@@ -605,8 +598,55 @@ function EnhancedSpotlight(props: EnhancedSpotlightProps) {
   );
 }
 
-function SceneContent() {
+// Professional bottom fade overlay component
+function BottomFadeOverlay() {
+  return (
+    <div className="fixed inset-0 pointer-events-none z-10">
+      {/* Bottom fade gradient */}
+      <div 
+        className="absolute bottom-0 left-0 right-0 h-1/3"
+        style={{
+          background: `linear-gradient(to top, 
+            rgba(0, 0, 0, 0.95) 0%,
+            rgba(0, 0, 0, 0.8) 15%,
+            rgba(0, 0, 0, 0.6) 30%,
+            rgba(0, 0, 0, 0.4) 45%,
+            rgba(0, 0, 0, 0.2) 60%,
+            rgba(0, 0, 0, 0.1) 75%,
+            rgba(0, 0, 0, 0.05) 85%,
+            transparent 100%
+          )`,
+        }}
+      />
+      
+      {/* Subtle vignette effect for premium look */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: `radial-gradient(ellipse at center, 
+            transparent 20%,
+            rgba(0, 0, 0, 0.1) 70%,
+            rgba(0, 0, 0, 0.3) 100%
+          )`,
+        }}
+      />
+      
+      {/* Extra bottom shadow for depth */}
+      <div 
+        className="absolute bottom-0 left-0 right-0 h-20"
+        style={{
+          background: `linear-gradient(to top, 
+            rgba(0, 0, 0, 0.7) 0%,
+            rgba(0, 0, 0, 0.3) 40%,
+            transparent 100%
+          )`,
+        }}
+      />
+    </div>
+  );
+}
 
+function SceneContent() {
   const depthBuffer = useDepthBuffer({ 
     size: 2048,
     frames: 1
@@ -624,13 +664,13 @@ function SceneContent() {
         color="#aaaace" 
         position={[3, 3, 2]}
         volumetric={true}
-        opacity={1}
-        penumbra={1}
-        distance={17}
-        angle={0.8}
-        attenuation={30}
-        anglePower={6}
-        intensity={1}
+        opacity={0.7}
+        penumbra={0.8}
+        distance={20}
+        angle={0.9}
+        attenuation={50}
+        anglePower={8}
+        intensity={0.6}
         shadowBias={-0.0001}
         castShadow={true}
       />
@@ -661,14 +701,12 @@ export function Scene() {
     };
 
     checkIsDesktop();
-
     window.addEventListener("resize", checkIsDesktop);
-
     return () => window.removeEventListener("resize", checkIsDesktop);
   }, []);
 
   return (
-    <div className="h-svh w-screen relative bg-black">
+    <div className="h-svh w-screen relative bg-black overflow-hidden">
       <Canvas
         shadows
         gl={{
@@ -681,8 +719,10 @@ export function Scene() {
         }}
       >
         <SceneContent />
-        {/* <Perf /> */}
       </Canvas>
+      
+      {/* Professional bottom fade overlay */}
+      <BottomFadeOverlay />
     </div>
   );
 }
